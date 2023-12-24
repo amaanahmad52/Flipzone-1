@@ -4,20 +4,25 @@ const app=require("./app")
 
 const dotenv=require("dotenv")
 
+
 dotenv.config({ path: "backend/config/config.env" })
 
+
 const cloudinary=require("cloudinary")
+
  
 
 const connect=require("./datbase")
 
 connect()  //call this after dotenv required otherwise database file will not get url from env file
 
-cloudinary.config({
+exports.const=cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
+    api_secret: process.env.API_SECRET,
+    secure:true
 });
+
 process.on('uncaughtException', (error) => {   //this need to be given at top.
     console.error('Uncaught Exception:', error);
     // Perform any necessary cleanup or logging

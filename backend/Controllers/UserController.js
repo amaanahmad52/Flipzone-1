@@ -3,21 +3,25 @@ var crypto=require("crypto")
 const User=require('../modals/UserModal');
 const asynchandler = require('../utils/asynchandler');
 const mail=require("../utils/nodemailer")
-
+const cloudinary=require("cloudinary")
 const getToken = require('../utils/tokengeneratorofjwt');
 
-const cloudinary=require('cloudinary')
 //creating the user
 exports.createUser=asynchandler(async(req,res)=>{
 
-    console.log("received",req.body);
-    const my_cloud=await cloudinary.v2.uploader.upload(req.body.avatar,{ resource_type: 'image' },{
+    // console.log(req.body)
+    
+   
+    const my_cloud=await cloudinary.uploader.upload(req.body.avatar,{
         folder:"avatars",
         width:150,
         crop:'scale'
         
     })
+        // console.log(my_cloud)
+    
     // console.log("h0i")
+    // console.log("after",name,email,password,my_cloud.public_id,my_cloud.secure_url);
 
     const{name,email,password}=req.body; //will be given by user
     console.log(name,email,password)

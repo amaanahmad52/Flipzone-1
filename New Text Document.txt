@@ -1,0 +1,79 @@
+//
+.
+server<--->app -->routes(routes got by controllers , controllers got by modals)
+.
+.
+.
+generated token at login and signup by jwt-> it consist of a header->(type of data) payload->(actual data) and a signature-(authenticates token itself) 
+
+>allowwing only logined user to see the specific details / admin to create or get products
+>made logout and checked for prev applied middlewares of security
+
+but this security se bas ye pata laga ki logined hai ya nhi,,
+>now we will make code such that it will know whether admin is logging or user
+
+>made a foreign key (reference) in product table , named user.. jo ki ye btaega ki admin ka naam kya hai, jisne product create kiya
+
+>>added mongoose method in modal for token generation by crypto
+>>set nodemailer
+>>forgot
+>>reset 
+
+>>error handling
+
+>>user routes. (profile see update and all)
+
+>>created admin routes (to see user counts details and all)
+
+>>Reviews section
+
+>>order apis (create orderm get order by user and admin ,get all orders , updatestock status, delete order)
+
+>>>frontend begin
+
+redux --> action reducers and store .. action will tell what to done, reducer will tell how to done ,
+ab ye bhi pata hona chaiye ki different actions ko different(reducer folders/iske anda saare reducer files) reducer control krte... aur ek root reducer( redured folder /index.js) hota hai jo saare reducers ko leke store pe bhej dega
+
+store will be imported in main index,js file and by using provider(app ko store ka data provide kr dia) and now store can be accessed by components... to use the store function dispatch is used, it triggers the function
+
+(Working of redux . as dunction is called by dispatch-->call goes to action-->then goes to reducer (jo ki combined reducer pe save h) -->updation takes place-->store updates and that value is returned
+
+>> made the product reducer actions and added alerts
+>>made reducer to get details of a particular product /nhi chala tha toh direct api call krdi
+>>made search option
+>>add functionality in products.js file
+
+
+>>added pagination and price filter, added categories
+
+>>started user pages ......................................................
+
+formdata object of js is used to get form data entered by the user , it doesn't refresh page, efficient , can be easily edited as compared to normal htmo form submit
+it is basicaaly a map (kay-value) key is name of input field whatever we give and value is the data that user enters
+like a map in language it has various methods , get  append delete has  set etc..  
+
+its .set method is used todealing with  push multiple same names (append cant do that)  it removes all fields with the given name and then appends a new field.  Thus, it ensures that there will be a unique key with a name. . but append will insert multiple val with same name(if occurs) =>error in database
+
+#JavaScript FileReader--> It is an effective and feasible method for receiving entry to local file contents without a server-side back-end.
+
+0: This indicates that no read action was initiated although the FileReader object was created.
+1: It denotes a progressive state for the read process.
+2: It indicates that the read process is finished.
+result: Depending on the type of read operation carried out, this property gives the outcome of the read operation as a string, an ArrayBuffer, or a DataURL.
+
+
+now added handle login by redux, if worng credential then it will come as an error by redux, and the we added an alert for it and a clear error action to remove that wron credential message
+
+added handle register , with cloudinary  (took away me whole damn 3 days due to various errors, proxt error env accesing error)
+
+..added load user reducer so that after login or signup direct account page open ho
+
+
+
+
+
+
+
+
+
+
