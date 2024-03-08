@@ -1,6 +1,9 @@
 const asynchandler = require("./asynchandler");
 const jwt = require('jsonwebtoken');
 const User=require("../modals/UserModal")
+const dotenv=require("dotenv")
+
+dotenv.config()
 exports.isAuthenticationCheck=asynchandler(async(req,res,next)=>{
 
     //we need token from cookie to check  (jo ki login ya signup ke time store ho gya)
@@ -14,12 +17,17 @@ exports.isAuthenticationCheck=asynchandler(async(req,res,next)=>{
     if (!token) {
         res.status(401).json({ error: 'Unauthorized' });
     }
+    
+    // console.log(process.env.JWT_SECRET)
+    // console.log('Token:', token);
+  
+    // console.log(typeof token)
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.id;   //as we given id as payload at creation time, so we use that keyword only
-
-    req.finduser=await User.findById(userId)   //saved on req.finduser.. **it can be used whenever needed after login
-    // console.log(req.finduser)
+    // console.log(userId)
+    req.userdetails=await User.findById(userId)   //saved on req.userdetails.. **it can be used whenever needed after login
+    // console.log(req.userdetails);
     // Proceed to the next middleware or route in the router.route
     next();
 })

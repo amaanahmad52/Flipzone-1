@@ -3,6 +3,8 @@ const validator = require("validator");
 const bcrypt = require("bcrypt"); //yhi pe sb validators lga do
 const jwt=require("jsonwebtoken")
 const crypto = require('crypto'); //buildin nodejs module
+const dotenv=require("dotenv")
+dotenv.config()
 const userschema = new mongoose.Schema({
   name: {
     type: String,
@@ -62,7 +64,9 @@ userschema.methods.comparePassword = async function (password) {
 };
 
 //generating jwt token   (a method of userschema is created)
-userschema.methods.getJWTTOKEN=()=>{  ///func
+userschema.methods.getJWTTOKEN=async function(){  ///func
+    // console.log(this.id)
+    // console.log(process.env.JWT_EXPIRE)
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {   //(payload,secret{options})
         expiresIn: process.env.JWT_EXPIRE,
     });

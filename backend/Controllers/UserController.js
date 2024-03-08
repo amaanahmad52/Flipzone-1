@@ -44,7 +44,7 @@ exports.createUser=asynchandler(async(req,res)=>{
     
     
     // console.log(newUser)
-    getToken(user,201,res) //save user with token
+     getToken(user,201,res) //save user with token
 
 });
 
@@ -55,21 +55,23 @@ exports.createUser=asynchandler(async(req,res)=>{
 exports.loginUser=asynchandler(async(req,res)=>{
     const{email,password}=req.body;
    
-    const foundeduser=await User.findOne({email}).select("+password")
+    const finduser=await User.findOne({email}).select("+password")
     // explicitly requesting that the "password" field should be included in the results by using +password.
-    if(!foundeduser){
+    if(!finduser){
         return res.status(401).json({message:"invalid credentials"})
     }
     
-    const match=await foundeduser.comparePassword(password) //a new hash of passwword created and compared with prev real stored
+    const match=await finduser.comparePassword(password) //a new hash of passwword created and compared with prev real stored
     
     if(!match){
         return res.status(401).json({message:"invalid credentials"})
     }
 
-    getToken(foundeduser,200,res)  
 
-
+      getToken(finduser,200,res)  
+     
+    //   console.log(finduser);/
+    
 })
 
 
@@ -223,17 +225,22 @@ exports.profileUpdate=asynchandler(async(req,res,next)=>{
     // return next()
 
 })
-
+//REQ.FINDUSER IS NULL ,,????????  WHYYYYYYYYYYYYYYY --> error was in auth file
 //seeing the details
-exports.getUserDetails=asynchandler(async(req,res,next)=>{
-    const me=await User.findOne(req.finduser)
-       
+exports.getUserDetails = asynchandler(async (req, res, next) => {
+    
+    // console.log(req.userdetails)
+    if (!req.userdetails) { //auth file seayega
+        return res.status(404).json({ success: false, message: 'User not found' });
+    }
+    
+    const user = await User.findById(req.userdetails.id);
+    
     res.status(200).json({
-        success:true,
-        me
-    })
-})
-
+      success: true,
+      user
+    });
+  });
 //to get all users detail -->admin
 
 exports.getAllUserDetails=asynchandler(async(req,res,next)=>{
@@ -248,7 +255,7 @@ exports.getAllUserDetails=asynchandler(async(req,res,next)=>{
 
 //to get a particular user detail -->admin
 
-exports.getUserDetails=asynchandler(async(req,res,next)=>{
+exports.getUserDetailsbyid=asynchandler(async(req,res,next)=>{
 
     const singleuser=await User.findById(req.params.id);
    

@@ -68,7 +68,7 @@ added handle register , with cloudinary  (took away me whole damn 3 days due to 
 
 ..added load user reducer so that after login or signup direct account page open ho
 
-
+dispatch se action method call krte, we can also use an alternative, just import store and use store.dispatch(actionname)
 
 
 
