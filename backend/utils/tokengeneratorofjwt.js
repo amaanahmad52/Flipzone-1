@@ -6,8 +6,8 @@
     //.cookie method has 3 parameters[]   res.cookie(name, value [, options])
     //httponly when set to true, js of client side browser will not be able to get authorized things from cookies
     
-const getToken = async(userdetails, statusCode, res) => { //saves token in cookie
-    const token =await userdetails.getJWTTOKEN(); //function defined in usermodel
+const getToken = async function(userdetails, statusCode, res) { //saves token in cookie
+    const token = await userdetails.getJWTTOKEN(); //function defined in usermodel
   //  console.log(token);
     // options for cookie
     const options = {
@@ -16,11 +16,12 @@ const getToken = async(userdetails, statusCode, res) => { //saves token in cooki
     //   ),
     expires: new Date(Date.now() + 86400000),
       httpOnly: true,
+      secure: false 
     };
     
                                 
     
-     res.status(statusCode).cookie("token", token, options).json({  //express method to set cookie res.cookie
+    return res.status(statusCode).cookie("token", token, options).json({  //express method to set cookie res.cookie
       success: true,
       userdetails,
       token

@@ -1,6 +1,7 @@
 const asynchandler = require("../utils/asynchandler") //trycat middleware so that ,ot need to wrap apis in trycat each time, rather just give this middleware-->increase cose readability
 const Product=require("../modals/ProductModal")//mpdal imported
 const apifeature = require("../utils/apifeatures")
+const cloudinary=require("cloudinary")
 //product controller will do all thing and give to route
 
    
@@ -10,11 +11,42 @@ const apifeature = require("../utils/apifeatures")
 exports.createProducts=asynchandler(async(req,res,next)=>{   
 
     //product create krte time ji admin ne bnaaya uska naam save krke rkh do body pe, so every time it got passed
-
-    req.body.Fuser=req.finduser.id; //as we saved complete document in finduser after login . and Fuser is mongodb object(FK) which references with userschema
+   
+    req.body.Fuser=req.userdetails.id; //as we saved complete document in finduser after login . and Fuser is mongodb object(FK) which references with userschema
     //isko humne admin ki id dedi
+   //herer we need to upload multiple images in cloudinary
+    
+    let images=[];
 
-    console.log(req.body)
+    if(typeof req.body.images==='string'){  //if ek hi image hogi to ek hi url ayega, hence string check
+        images.push(req.body.images);
+    }
+    else{
+        images=req.body.images; //else saari daal do  array of images that admin uploaded
+    }
+
+    //send this to cloudinary and create links
+    let cloudinaryProductImagesLinks=[];
+
+    
+    // console.log(req.body)
+    for (let i = 0; i < images.length; i++) {
+        
+        const resultimg=await cloudinary.v2.uploader.upload((images[i]),{
+            folder:"product"
+        })
+        // console.log( images[i])
+        cloudinaryProductImagesLinks.push({
+            public_id:resultimg.public_id,
+            url:resultimg.secure_url
+        })
+        
+    }
+    //now save these links and creater database document
+    req.body.images=cloudinaryProductImagesLinks
+    console.log(cloudinaryProductImagesLinks)
+
+    // console.log(req.body)
 
     const product=await Product.create(req.body)
 
@@ -63,7 +95,20 @@ exports.getProducts=asynchandler(async(req,res,next)=>{
 
 
   
+//get all products(admin)
 
+
+exports.getAdminProducts=asynchandler(async(req,res,next)=>{
+        console.log("hi")
+    const products = await Product.find();
+      res.status(200).json({
+            success:true,
+            products
+        })
+       
+    })  
+    
+    
 //Update the Product  :ADMIN
 
 exports.updateProducts=asynchandler(async(req,res,next)=>{
@@ -90,13 +135,23 @@ exports.updateProducts=asynchandler(async(req,res,next)=>{
 exports.deleteProducts=asynchandler(async(req,res,next)=>{
 
     
-        const products=Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id);
 
-        if(!products){
+
+
+        if(!product){
             return res.status(500).json({success:false,message:"Product not found"})
         }
-        await Product.deleteOne({_id:req.params.id})
+        // console.log(req.params.id)
+        // console.log(id)
 
+        // Deleting Images From Cloudinary
+            for (let i = 0; i < product.images.length; i++) {
+                await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+            }
+            
+        await Product.deleteOne({_id:req.params.id})
+        // await product.remove();
         res.status(200).json({
             status:true,
             message:"Deleted Successfully"

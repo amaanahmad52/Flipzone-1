@@ -8,7 +8,7 @@ exports.isAuthenticationCheck=asynchandler(async(req,res,next)=>{
 
     //we need token from cookie to check  (jo ki login ya signup ke time store ho gya)
     //we will not use localstorage as it is risky
-    const {token}=req.cookies  //its method of cookie-parser npm to get saved cookie 
+    const {token}= req.cookies  //its method of cookie-parser npm to get saved cookie 
     // console.log(token)
 
 
@@ -23,7 +23,7 @@ exports.isAuthenticationCheck=asynchandler(async(req,res,next)=>{
   
     // console.log(typeof token)
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded =  jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.id;   //as we given id as payload at creation time, so we use that keyword only
     // console.log(userId)
     req.userdetails=await User.findById(userId)   //saved on req.userdetails.. **it can be used whenever needed after login
@@ -44,12 +44,16 @@ exports.isAuthenticationCheck=asynchandler(async(req,res,next)=>{
   
 
 exports.isadmin = (...roles) => { //it check for user, if he is admin or not
-    return async (req, res, next) => {
+
+  return async (req, res, next) => {
+      // console.log(req.userdetails)
+
+      
       try {
         // Remember, we have saved the user in the request after JWT verification as `req.finduser`.
         // console.log(req.finduser)
-        if (!roles.includes(req.finduser.role)) {
-          return res.status(401).json({ message: `${req.finduser.role} is not allowed to access this place` });
+        if (!roles.includes(req.userdetails.role)) {
+          return res.status(401).json({ message: `${req.userdetails.role} is not allowed to access this place` });
         }
     
         next();

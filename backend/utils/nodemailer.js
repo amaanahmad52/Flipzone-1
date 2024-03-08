@@ -1,5 +1,6 @@
 var nodemailer = require("nodemailer");
-
+const dotenv=require("dotenv")
+dotenv.config()
 const mail=async(opt)=>{
   var transporter = nodemailer.createTransport({
    

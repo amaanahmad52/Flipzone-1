@@ -71,6 +71,41 @@ added handle register , with cloudinary  (took away me whole damn 3 days due to 
 dispatch se action method call krte, we can also use an alternative, just import store and use store.dispatch(actionname)
 
 
+>> now added speed dial if user is logged in (user options),  dashboard icon keval admin ko appear hoga
+
+>>profile update then password update hen reset password by gmail
+>>add to cart reducer added
+>>cart component add
+>>added checkout
+
+>>add of payment by stripe
+      STRIPE 
+Publishable API key: Used in React application to generate a token.
+Secret API key: Used in server application to charge the money by accessing the Stripe API.
+
+backend se pulishable key response pe bhejege, jo front end axios se lelega
+https://www.mitrahsoft.com/blog/stripe-payment-api-using-reactjs-nodejs -< for all docs
+
+
+
+//started order frontend
+
+ made myorders page.
+//when we click on an order, all its details will appear
+
+//skipped review adding part. directly jumped to admin frontend
+
+//admin.....
+created dashboard
+NOTE that after login when you run /me route then only rer.userdetails get filled up
+
+created all and create section
+in create(newproduct.js) i mentioned all details as we get images(file)) from e.target.files, how we use filereader to save multiple imges in image state array
+error occcuring ->multiple images are not entering in cloudinary. they are not converting to string type
+
+
+
+
 
 
 

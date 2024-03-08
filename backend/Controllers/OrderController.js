@@ -22,7 +22,7 @@ exports.createOrder = asynchandler(async (req, res, next) => {
     taxPrice,
     totalPrice,
     shippingPrice,
-    Fuser:req.finduser._id,
+    Fuser:req.userdetails._id,
 
   });
 
@@ -56,8 +56,8 @@ exports.getOrderDetails=asynchandler(async(req,res,next)=>{
 
 exports.myOrders=asynchandler(async(req,res,next)=>{
   
-  const order=await Order.find({Fuser:req.finduser._id});
-
+  const order=await Order.find({Fuser:req.userdetails._id});
+  // console.log(order)
   if(!order){
     return res.status(404).json({message:"Not Found"})
   }

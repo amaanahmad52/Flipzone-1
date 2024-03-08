@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const {createProducts,getProducts, updateProducts, deleteProducts, getParticularProduct}=require("../Controllers/ProductController")
+const {createProducts,getProducts, updateProducts, deleteProducts, getParticularProduct, getAdminProducts}=require("../Controllers/ProductController")
 const { isAuthenticationCheck, isadmin } = require('../utils/auth')
 
 
@@ -18,7 +18,9 @@ router.route("/product/:id").get(getParticularProduct)
 
 router.route("/admin/products/create").post(isAuthenticationCheck, isadmin("admin"),createProducts)//**ordering of middleware matters.(left to right) pehle check then do other
 router.route("/admin/products/update/:id").put(isAuthenticationCheck, isadmin("admin"),updateProducts)
-router.route("/admin/products/:id").delete(isAuthenticationCheck, isadmin("admin"),deleteProducts)
+router.route("/admin/products/delete/:id").delete(isAuthenticationCheck, isadmin("admin"),deleteProducts)
+
+router.route("/admin/products").get(isAuthenticationCheck, isadmin("admin"),getAdminProducts)
 
 
 // router.route("/products/:name").get(getParticularProduct)

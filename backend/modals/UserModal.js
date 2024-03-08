@@ -67,9 +67,14 @@ userschema.methods.comparePassword = async function (password) {
 userschema.methods.getJWTTOKEN=async function(){  ///func
     // console.log(this.id)
     // console.log(process.env.JWT_EXPIRE)
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {   //(payload,secret{options})
-        expiresIn: process.env.JWT_EXPIRE,
-    });
+    try {
+      return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+          expiresIn: process.env.JWT_EXPIRE,
+      });
+  } catch (error) {
+      console.error('Error creating JWT:', error);
+      throw error; // Rethrow the error or handle it accordingly
+  }
 }
 
 //reset password token generation using crypto

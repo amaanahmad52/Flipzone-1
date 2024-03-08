@@ -12,7 +12,7 @@ exports.createUser=asynchandler(async(req,res)=>{
     // console.log(req.body)
     
    
-    const my_cloud=await cloudinary.uploader.upload(req.body.avatar,{
+    const my_cloud=await cloudinary.v2.uploader.upload(req.body.avatar,{
         folder:"avatars",
         width:150,
         crop:'scale'
@@ -24,7 +24,7 @@ exports.createUser=asynchandler(async(req,res)=>{
     // console.log("after",name,email,password,my_cloud.public_id,my_cloud.secure_url);
 
     const{name,email,password}=req.body; //will be given by user
-    console.log(name,email,password)
+    // console.log(name,email,password)
     const user=await User.create({
         
         name,
@@ -86,6 +86,7 @@ exports.logout = asynchandler((req, res,next) => {
   
 
 //reset password
+
 exports.forgotPassword=asynchandler(async(req,res,next)=>{
 
     //first check is user present
@@ -102,11 +103,12 @@ exports.forgotPassword=asynchandler(async(req,res,next)=>{
    await user.save()
 
    //now send this token to email
-   const url=`${req.protocol}://${req.get("host")}/api/v1/user/resetPassword/${tokenmilgya}`
+//    const url=`${req.protocol}://${req.get("host")}/api/v1/user/resetPassword/${tokenmilgya}`
+   const url=`http://localhost:3007/user/resetPassword/${tokenmilgya}`
 
-   const message=`Click Here to Reset the Password:${url}\n\n\n Ignore if not done by you.`
+   const message=`Click Here to Reset the Password:\n${url}\n\n\n Ignore if not done by you.`
    
-    console.log(message)
+    // console.log(message)
     try {
        await mail ({//basically we are calling imported function
         message,
@@ -115,7 +117,7 @@ exports.forgotPassword=asynchandler(async(req,res,next)=>{
          
        res.status(200).json({
         success:true,
-        message:"Email sent Successfully "
+        message:"A password reset link sent successfully to this email"
        })
         
     } catch (error) {
@@ -129,7 +131,8 @@ exports.forgotPassword=asynchandler(async(req,res,next)=>{
 })
 
 
-//now reset
+//now reset 
+
 exports.resetPassword=asynchandler(async(req,res,next)=>{
     //we can access token form url we got .as user click on url, we can access token from that url using re.param
     const token=req.params.token;  //bina hashed token milega, kyuki yhi return kiya tha usermodel pe
@@ -164,25 +167,25 @@ exports.resetPassword=asynchandler(async(req,res,next)=>{
 
 //routes for profile update of the user
 
-//password change
+//password change 
 
 exports.passwordChange=asynchandler(async(req,res,next)=>{
 
 
-    const{newPassword,confirmPassword,oldPassword}=req.body
+    const{oldPassword,newPassword,confirmPassword}=req.body
 
     
     if(newPassword!==confirmPassword){
         return res.status(401).json({message:"Password doesn`t matches"})
 
     }
-    const foundeduser=await User.findOne(req.finduser).select("+password") //document saved  in req.finduser when we call authentication check
+    const foundeduser=await User.findOne(req.userdetails).select("+password") //document saved  in req.userdetails when we call authentication check
     // if(!foundeduser){
     //     return res.status(401).json({message:"invalid credentials"})
     // }
     
     const match=await foundeduser.comparePassword(oldPassword) //puraane saved password se , we compared 
-    
+                           //bcrypt compare
     if(!match){
         return res.status(401).json({message:"invalid credentials"})
     }
@@ -201,29 +204,45 @@ exports.passwordChange=asynchandler(async(req,res,next)=>{
 
 exports.profileUpdate=asynchandler(async(req,res,next)=>{
 
-    const{newname,newemail,newavatar}=req.body
-
-    const foundeduser=await User.findOne(req.finduser)
-
-    if(newname){
-        foundeduser.name=newname
-        await foundeduser.save()
-    }
-    if(newemail){
-        foundeduser.email=newemail
-        await foundeduser.save()
-    }
-    if(newavatar){
-        foundeduser.avatar=newavatar
-        await foundeduser.save()
-    }
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email ,
+      };
+     
     
-    res.status(200).json({
-        success:true,
-        foundeduser
-    })
-    // return next()
+     
+      if (req.body.avatar) {
+        const user = await User.findById(req.userdetails.id);
+    
+        const imageId = user.avatar.public_id;
+    
+        await cloudinary.v2.uploader.destroy(imageId);
+    
+        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+          folder: "avatars",
+          width: 150,
+          crop: "scale",
+        });
+         
+        newUserData.avatar = {  //inserted new key value in newuserdata
+          public_id: myCloud.public_id,
+          url: myCloud.secure_url,
+        };
+      }
+     
+    //   console.log(req.userdetails.id)
+      const user = await User.findByIdAndUpdate(req.userdetails.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      });
 
+    
+      res.status(200).json({
+        success: true,
+        
+      });
+    
 })
 //REQ.FINDUSER IS NULL ,,????????  WHYYYYYYYYYYYYYYY --> error was in auth file
 //seeing the details

@@ -10,11 +10,11 @@ const OrderSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    State: {
+    state: {
       type: String,
       required: true,
     },
-    Country: {
+    country: {
       type: String,
       default: "India",
     },
@@ -47,7 +47,7 @@ const OrderSchema = new mongoose.Schema({
         default:1
       },
 
-      Fproduct: {
+      product: {
         type: mongoose.Schema.ObjectId,
         ref: "product",
         required: true,
@@ -77,12 +77,12 @@ const OrderSchema = new mongoose.Schema({
     // required: true
   },
 
-  itemPrice: {
+  subtotal: {
     type: Number,
     required: true,
     default: 0,
   },
-  taxPrice: {
+  tax: {
     type: Number,
     required: true,
     default: 0,
@@ -92,7 +92,7 @@ const OrderSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
-  shippingPrice: {
+  shippingCharges: {
     type: Number,
     required: true,
     default: 0,
