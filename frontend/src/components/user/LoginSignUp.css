@@ -1,0 +1,238 @@
+
+.loginSignUpContainer {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+  position: fixed;
+  top: 0%;
+  left: 0;
+  background-color: #f2f0fd;
+}
+
+.loginSignUpBox {
+  background-color: white;
+  
+  /* background-color: rgb(231, 231, 231); */
+  width: 25vw;
+  height: 70vh;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.loginSignUpToggle {
+  margin-top: 3px;
+  display: flex;
+  height: 3vmax;
+  
+}
+.loginSignUpToggle > p {
+  color: rgba(0, 0, 0, 0.678);
+  font: 300 1vmax "Poppins";
+  font-weight: bold;
+  transition: all 0.5s;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+.loginSignUpToggle > p:hover {
+  color: tomato;
+}
+
+.loginSignUpBox > div > button {
+  background-color:#611c66;
+  height: 3px;
+  
+  width: 50%; 
+  border: none;
+  transition: all 0.5s;
+}
+
+.LoginForm,
+.SignUpForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  padding: 2vmax;
+  justify-content: space-evenly;
+  height: 70%;
+  transition: all 0.5s;
+}
+
+.SignUpForm {
+  transform: translateY(-100%) translateX(-100vmax);
+}
+
+.LoginForm > div,
+.SignUpForm > div {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.LoginForm > div > input,
+.SignUpForm > div > input {
+  padding: 1vmax 4vmax;
+  padding-right: 1vmax;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.267);
+  border-radius: 4px;
+  font: 300 0.9vmax Poppins;
+  outline: none;
+}
+
+.LoginForm > div > svg,
+.SignUpForm > div > svg {
+  position: absolute;
+ 
+  transform: translateX(1vmax);   /* this line shift icon inside input box */
+  font-size: 1.6vmax;
+  color: rgba(0, 0, 0, 0.623);
+}
+
+.LoginForm > a {
+  color: rgba(0, 0, 0, 0.651);
+  text-decoration: none;
+  align-self: flex-end;
+  transition: all 0.5s;
+  font: 500 0.8vmax "Poppins";
+}
+
+.loginForm > a:hover {
+  color: black;
+}
+
+#enterImage > img {
+  width: 3vmax;
+  border-radius: 100%;
+}
+#enterImage > input {
+  display: flex;
+  padding: 0%;
+}
+
+#enterImage > input::file-selector-button {
+  cursor: pointer;
+  width: 100%;
+  z-index: 2;
+  height: 5vh;
+  border: none;
+  margin: 0%;
+  font: 400 0.8vmax "Poppins";
+  transition: all 0.5s;
+  padding: 0 1vmax;
+  color: rgba(0, 0, 0, 0.623);
+  background-color: rgb(255, 255, 255);
+}
+
+#enterImage > input::file-selector-button:hover {
+  background-color: rgb(235, 235, 235);
+}
+#enterImage>label{
+  cursor: pointer;
+  border: none;
+  margin: 0%;
+  font: 400 0.8vmax "Poppins";
+  transition: all 0.5s;
+  background-color: rgb(235, 235, 235);
+}
+#enterImage >svg{
+  position: absolute;
+ 
+  transform: translateX(1vmax);   /* this line shift icon inside input box */
+  font-size: 1.6vmax;
+  color: rgba(0, 0, 0, 0.623);
+}
+
+.loginbutton,
+.signupbutton {
+  border: none;
+  background-color:#611c66;
+  color: white;
+  font: 300 0.9vmax "Poppins";
+  width: 100%;
+  padding: 0.8vmax;
+  cursor: pointer;
+  transition: all 0.5s;
+  border-radius: 4px;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+}
+
+.loginbutton:hover,
+.signupbutton:hover {
+  background-color: rgb(179, 66, 46);
+}
+
+.shiftToLeft {
+  transform: translateX(-100%);
+}
+.front {
+  transform: translateX(0%);
+}
+
+.formfront {
+  transform: translateX(0%) translateY(-100%);
+}
+
+.shiftToRight {
+  transform: translateX(100%);
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .loginSignUpContainer {
+    background-color: white;
+  }
+  .loginSignUpBox {
+    width: 100vw;
+    height: 95vh;
+  }
+  .loginSignUpToggle {
+    height: 5vmax;
+  }
+  .loginSignUpToggle > p {
+    font: 300 1.5vmax "Poppins"; /* Changed font family */
+  }
+
+  .LoginForm,
+  .SignUpForm {
+    padding: 5vmax;
+  }
+
+  .LoginForm > div > input,
+  .SignUpForm > div > input {
+    padding: 2.5vmax 5vmax;
+    font: 300 1.7vmax "Poppins"; /* Changed font family */
+  }
+
+  .LoginForm > div > svg,
+  .SignUpForm > div > svg {
+    font-size: 2.8vmax;
+  }
+
+  .LoginForm > a {
+    font: 500 1.8vmax "Poppins"; /* Changed font family */
+  }
+
+  #enterImage > img {
+    width: 8vmax;
+    border-radius: 100%;
+  }
+
+  #enterImage > input::file-selector-button {
+    height: 7vh;
+    font: 400 1.8vmax "Poppins"; /* Changed font family */
+  }
+
+  .loginbutton,
+  .signupbutton {
+    font: 300 1.9vmax "Poppins"; /* Changed font family */
+    padding: 1.8vmax;
+  }
+}
