@@ -21,6 +21,7 @@ const Cart = () => {
     
     const handledecrease=(id,quantity)=>{
         const x=quantity-1;
+        console.log(x);
         if(x<=0){
             dispatch(deleteCartItemsAction(id))
             return;
