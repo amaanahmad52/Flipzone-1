@@ -13,6 +13,7 @@ import Title from "../design/TitleData";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {toast} from 'react-toastify';
+import Sidebar from './Sidebar';
 
 
 const ProductEdit = () => {
@@ -23,14 +24,15 @@ const ProductEdit = () => {
        "Laptop",
       "Appliances",
        "Home&Furniture",
-       "Computer"
+       "Hardwares"
      ];
-      const dispatch=useDispatch();
-      const {particularproduct,loading}=useSelector((state)=>state.particularproduct)
-      const {error,success}=useSelector((state)=>state.editProduct)
+    const dispatch=useDispatch();
+    const {particularproduct,error:prodError}=useSelector((state)=>state.particularproduct)
+    const {error,success,loading}=useSelector((state)=>state.editProduct)
 
-      const nav=useNavigate()
-      const {id}=useParams()
+    const nav=useNavigate()
+    const {id}=useParams()
+
     const[name,setName]=useState(particularproduct.name)
     const[description,setDescription]=useState(particularproduct.description)
     const[images,setImages]=useState([particularproduct.images])
@@ -38,9 +40,36 @@ const ProductEdit = () => {
     const[category,setCategory]=useState(  particularproduct.category)
     const[stock,setStock]=useState(particularproduct.stock)
     const[imagesPreview,setImagesPreview]=useState([])
+    const[oldImages,setOldImges]=useState([])
+
+
+    const handleFileAdd=(e)=>{
+        
+
+
+      const files = Array.from(e.target.files);
+
+      setImages([]);
+      setImagesPreview([]);
+  
+      files.forEach((file) => {
+        const reader = new FileReader();
+  
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setImagesPreview((old) => [...old, reader.result]);
+            setImages((old) => [...old, reader.result]);
+          }
+        };
+  
+        reader.readAsDataURL(file);
+      });
+      
+
+  }
 
     const handleSubmit=async(e)=>{
-        e.preventDefault();
+        e.preventDefault(); 
        
         const formData = new FormData();
       
@@ -50,19 +79,39 @@ const ProductEdit = () => {
         formData.set("category", category);
         formData.set("stock", stock);
         
-        // images.forEach((image) => {
-        //   // console.log(typeof images)
-        //   // console.log(image)
-        //   formData.append("images", image);   //yha pe mene set ki jgh append kia
-        //                                     //tha isleye 2d array bn rha tha
-        // });
+        images.forEach((image) => {
+    
+          formData.append("images", image);   //yha pe mene set ki jgh append kia
+                                            //tha isleye 2d array bn rha tha
+        });
         dispatch(productEditAction(id,formData));
     }
 
     useEffect(()=>{
+      //aisa ho skta ki particular product state pe koi aur product ho phle se
+      //aur ye if block baar baar disatch hone se bhi rokega
+      
+      if(!particularproduct && particularproduct._id!==id){
         dispatch(getParticularproduct(id))
+        console.log(particularproduct)
+      }
+      else{
+        //means particular product is same as the product that we wanna update
+        //set old properties to state. wo baad me submit krne pe update hongi, wrna yhi rhengi
+        setName(particularproduct.name)
+        setDescription(particularproduct.description)
+        setPrice(particularproduct.price)
+        setOldImges(particularproduct.images)
+        setCategory(particularproduct.category)
+        setStock(particularproduct.stock)
+      }
+        
         
         if(error){
+            toast.error(error.message);
+            dispatch(clearError())
+        }
+        if(prodError){
             toast.error(error.message);
             dispatch(clearError())
         }
@@ -71,12 +120,14 @@ const ProductEdit = () => {
             nav("/admin/products")
             dispatch({type:"RESET_UPDATE_PRODUCT"})
         }
-    },[dispatch,error,success])
+    },[dispatch,error,success,error,prodError,particularproduct])
+
+    
   return (
     <>
       <Title data={'Edit Product'}/>
       <div className="dashboard">
-      {/* <Sidebar/> */}
+      <Sidebar/>
         <div className="newProductContainer">
 
         <form className='createProductForm' encType="multipart/form-data" onSubmit={handleSubmit}>
@@ -140,7 +191,7 @@ const ProductEdit = () => {
                     type="file"
                     name="files"
                     accept="image/*"
-                    // onChange={}
+                    onChange={handleFileAdd}
                     multiple
                   />
                 </div>

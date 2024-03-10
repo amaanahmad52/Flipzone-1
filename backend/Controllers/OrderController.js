@@ -74,7 +74,7 @@ exports.myOrders=asynchandler(async(req,res,next)=>{
 exports.getAllOrders=asynchandler(async(req,res,next)=>{
   
   const order=await Order.find();
-  console.log(order);
+  // console.log(order);
   if(!order){
     return res.status(404).json({message:"Not Found"})
   }

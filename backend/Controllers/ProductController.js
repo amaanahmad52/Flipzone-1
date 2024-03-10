@@ -120,6 +120,40 @@ exports.updateProducts=asynchandler(async(req,res,next)=>{
             return res.status(500).json({success:false,message:"Product not found"})
         }
 
+        
+  let images = [];
+
+  if (typeof req.body.images === "string") {
+    images.push(req.body.images);
+  } else {
+    images = req.body.images;
+  }
+
+  //first of all delete old images
+  if (images !== undefined) { //means old images me kuch na kuch hai
+    // Deleting Images From Cloudinary
+    for (let i = 0; i < products.images.length; i++) {
+      await cloudinary.v2.uploader.destroy(products.images[i].public_id); //jo jo cloudinary me hain wo wo delete krdo
+    }
+
+    //now take new images as we did in create product
+    const imagesLinks = [];
+
+    //save bachi hui(jo obvsly new waali hongi)
+    for (let i = 0; i < images.length; i++) {
+      const result = await cloudinary.v2.uploader.upload(images[i], {
+        folder: "products",
+      });
+
+      imagesLinks.push({
+        public_id: result.public_id,
+        url: result.secure_url,
+      });
+    }
+
+    req.body.images = imagesLinks;
+  }
+
         products=await Product.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true,useFindAndModify:false})  
         //on setting new to true updated document will be returned as response
         res.status(200).json({

@@ -103,7 +103,7 @@ created all and create section
 in create(newproduct.js) i mentioned all details as we get images(file)) from e.target.files, how we use filereader to save multiple imges in image state array
 error occcuring ->multiple images are not entering in cloudinary. they are not converting to string type
 
-
+updated product, error->particular product se data nhi aarha . state pe to aarha 
 
 
 
