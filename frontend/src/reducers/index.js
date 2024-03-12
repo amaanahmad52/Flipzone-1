@@ -3,7 +3,7 @@ import {combineReducers} from "redux"
 import { AdminproductReducer, newProductCreateReducer, particularProductDetailReducer, productDeleteReducer, productEditReducer, productReducer } from './ProductsReducer'
 import { UpdateUserReducer, forgotandupdatePasswordReducer, getAllUsersReducer, userReducer } from "./userReducer"
 import { HandleCartReducer } from "./CartReducer"
-import { ParticularOrderDetailsReducer, getAllOrdersReducer, myOrderDetailsReducer, orderhandleReducer } from "./OrderReducer"
+import { ParticularOrderDetailsReducer, getAllOrdersReducer, myOrderDetailsReducer, orderhandleReducer, ordersDeleteReducer, ordersDeleteUpdateReducer, ordersUpdateReducer } from "./OrderReducer"
 
 export const rootReducer=combineReducers({
     //pass all the reducers here
@@ -22,7 +22,9 @@ export const rootReducer=combineReducers({
     getAllOrders:getAllOrdersReducer,
     newProductCreate:newProductCreateReducer,
     deleteProduct:productDeleteReducer,
-    editProduct:productEditReducer
+    editProduct:productEditReducer,
+    ordersdelete:ordersDeleteReducer,
+    ordersupdate:ordersUpdateReducer,
 })
 
 

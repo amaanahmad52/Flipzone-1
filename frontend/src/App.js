@@ -36,10 +36,12 @@ import ProtectedRoute from './ProtectedRoute';
 import AdminProtectedRoute from "./AdminProtectedRoute"
 import Dashboard from './components/admin/Dashboard';
 import AllProducts from './components/admin/AllProducts';
-//mast method to call an action :
-import store from "./store"
+
+import store from "./store"//mast method to call an action :
 import NewProduct from './components/admin/NewProduct';
 import ProductEdit from './components/admin/ProductEdit';
+
+import AllOrders from './components/admin/AllOrders';
 
 function App() {
   //now if user is autheticated then a  speed dialer will appear
@@ -143,6 +145,9 @@ function App() {
       </Route>
       <Route element={<AdminProtectedRoute isAdmin={true}/>}>
           <Route  exact path='/admin/product/:id'  element={<ProductEdit/>}></Route>
+      </Route>
+      <Route element={<AdminProtectedRoute isAdmin={true}/>}>
+          <Route  exact path='/admin/orders/'  element={<AllOrders/>}></Route>
       </Route>
 
 

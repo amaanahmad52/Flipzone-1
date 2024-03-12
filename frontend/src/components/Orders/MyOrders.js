@@ -29,16 +29,8 @@ const MyOrders = () => {
     
     
     const columns = [ //for givign heading of row
-    { field: 'id', headerName: 'Order Id', minWidth: 300, flex: 1 },
-    {
-          field: 'status',
-          headerName: 'Status',
-          minWidth: 150,
-          flex: 0.5,
-          cellClassName: (params) => {
-            return params.getValue(params.id, 'status') === 'Delivered' ? 'GreenColor' : 'RedColor';
-          },
-        },
+        { field: 'id', headerName: 'Order Id', minWidth: 300, flex: 1 },
+        { field: 'status', headerName: 'Status', minWidth: 150,flex: 0.5,cellClassName: (params) => {return params.getValue(params.id, 'status') === 'Delivered' ? 'GreenColor' : 'RedColor'; },},
         { field: 'quantity', headerName: 'Quantity', type: 'number', minWidth: 150, flex: 0.3 },
         { field: 'amount', headerName: 'Amount', type: 'number', minWidth: 270, flex: 0.5 },
         {

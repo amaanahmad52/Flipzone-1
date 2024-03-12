@@ -198,6 +198,12 @@ const ProductEdit = () => {
 
                 <div id="createProductFormImage">
                   
+                  {oldImages&& oldImages.map((image, index) => (
+                    <img key={index} src={image} alt="Product Preview" />
+                  ))}
+                </div>
+                <div id="createProductFormImage">
+                  
                   {imagesPreview.map((image, index) => (
                     <img key={index} src={image} alt="Product Preview" />
                   ))}

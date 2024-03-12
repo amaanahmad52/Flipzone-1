@@ -106,7 +106,7 @@ exports.UpdateStock = asynchandler(async (req, res, next) => {
 
   if (req.body.status === "Shipped") {
     order.OrderDetails.forEach(async (o) => {
-      await updateStock(o.Fproduct, o.quantity);
+      await updateStock(o.product, o.quantity);
     });
   }
   order.orderStatus = req.body.status;
@@ -122,11 +122,11 @@ exports.UpdateStock = asynchandler(async (req, res, next) => {
 });
 
 async function updateStock(id, quantity) {
-  const product = await Product.findById(id);
+  const p = await Product.findById(id);
 
-  product.stock -= quantity;
+  p.stock -= quantity;
 
-  await product.save({ validateBeforeSave: false });
+  await p.save({ validateBeforeSave: false });
 }
 
 
@@ -144,7 +144,7 @@ exports.deleteOrder=asynchandler(async(req,res,next)=>{
 
   res.status(200).json({
     success:true,
-    total:sum,
+    // total:sum,
     order
   })
 
