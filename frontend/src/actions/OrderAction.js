@@ -89,11 +89,12 @@ export const ParticularOrderDetailsAction = (id) => async (dispatch) => {
 }
   //Update orders ->admin  
 
-  export const orderUpdateAction=(id)=>async (dispatch) => {
+  export const orderUpdateAction=(id,dataform)=>async (dispatch) => {
     try {
         dispatch({type:ORDERS_EDIT_REQUEST})
 
-        const {data}=await axios.get(`/api/v1/admin/order/updatek/${id}`)
+        const {data}=await axios.put(`/api/v1/admin/order/update/${id}`,dataform,
+        {headers:{'Content-Type': 'application/json'}})
 
         dispatch({type:ORDERS_EDIT_SUCCESS,payloadData:data.success})
     } catch (error) {

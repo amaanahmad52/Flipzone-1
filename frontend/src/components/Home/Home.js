@@ -6,7 +6,7 @@ import TitleData from "../design/TitleData";
 import {useAlert} from "react-alert"
 import { useSelector,useDispatch} from "react-redux";
 import { getproduct } from "../../actions/ProductAction";  //imported the action to call it
-
+import imm from "../images/landingPhoto.png"
 
 
 const Home = () => {
@@ -36,18 +36,19 @@ const Home = () => {
     <>
     {loading? <Spinner/> :<>
       <TitleData data="FlipZone"/>
-      <div className="headTop">
-        <span>Your shopping is as unique as you are</span>
-        <p>Empowering Shoppers, Enriching Lives. </p>
-        <h1><button type="button" class="btn btn-dark">Shop Now</button></h1>
-
-        <a href="/">
-        
+      <div className="banner">
+        {/* <img style={{width:"inherit"}} src={imm} alt="" /> */}
+        {/* <span>Your shopping is as unique as you are</span> */}
+        {/* <p>Empowering Shoppers, Enriching Lives. </p> */}
+        <a href="#ok">
+        <button style={{fontFamily:"Poppins"}}  type="button" class="btn btn-outline-dark">Shop Now</button>
         </a>
+
+        
       </div>
       <h2 className="homeHeading">BEST OF FLIPZONE EXCLUSIVE BRANDS</h2>
 
-      <div className="container">
+      <div  id="ok" className="container">
         <div className="row ">
           
         

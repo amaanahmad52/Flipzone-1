@@ -195,6 +195,7 @@ export const ordersUpdateReducer=(state={},action)=>{
             return{
                 ...state,
                 loading:true,
+                success:false
                
             }
         case ORDERS_EDIT_SUCCESS:
@@ -209,7 +210,8 @@ export const ordersUpdateReducer=(state={},action)=>{
         case ORDERS_DELETE_FAIL:
             return{
                 loading:false,
-                error:action.payloadData
+                error:action.payloadData,
+                success:false
             }   
    
         case "UPDATE_ORDERS_RESET":

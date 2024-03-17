@@ -124,8 +124,8 @@ const ParticularProduct = () => {
                 </div>
                 <p>
                   Status:{" "}
-                  <b className={prod.Stock < 1 ? "redColor" : "greenColor"}>
-                    {prod.Stock < 1 ? "OutOfStock" : "InStock"}
+                  <b className={prod.stock < 1 ? "redColor" : "greenColor"}>
+                    {prod.stock < 1 ? "OutOfStock" : "InStock"}
                   </b>
                 </p>
               </div>

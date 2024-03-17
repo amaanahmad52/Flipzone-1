@@ -35,7 +35,7 @@ const ProcessOrder = () => {
   const [status, setStatus] = useState("");  //only thing tha need to be updated in this page
 
   useEffect(() => {
-    console.log(updated)
+    // console.log(updated)
     if (error) {
       toast.error(error);
       dispatch(clearErrors());

@@ -9,7 +9,7 @@ router.route("/order/myorders").get(isAuthenticationCheck,myOrders)
 
 router.route("/admin/order/allOrders").get(isAuthenticationCheck,isadmin("admin"), getAllOrders)
 router.route("/admin/order/update/:pid").put(isAuthenticationCheck,isadmin("admin"), UpdateStock)
-router.route("order/cancelOrder/:pid").delete(isAuthenticationCheck, deleteOrder)
+router.route("/order/cancelOrder/:pid").delete(isAuthenticationCheck, deleteOrder)
 
 
 

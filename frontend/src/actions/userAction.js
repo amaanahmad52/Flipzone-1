@@ -5,7 +5,12 @@ import{LOGIN_REQUEST,LOGIN_SUCCESS,LOGIN_FAIL,CLEAR_ERRORS,REGISTER_SUCCESS,
     UserUpdate_SUCCESS, UserUpdate_FAIL,UserUpdate_REQUEST,
     RESET_PASSWORD_REQUEST,RESET_PASSWORD_SUCCESS,RESET_PASSWORD_FAIL,
     FORGOT_PASSWORD_FAIL,FORGOT_PASSWORD_SUCCESS,FORGOT_PASSWORD_REQUEST,
-    EMAILRESET_PASSWORD_REQUEST,EMAILRESET_PASSWORD_SUCCESS,EMAILRESET_PASSWORD_FAIL} from "../constants/userConstants"
+    EMAILRESET_PASSWORD_REQUEST,EMAILRESET_PASSWORD_SUCCESS,EMAILRESET_PASSWORD_FAIL,
+    USER_DETAILS_REQUEST,USER_DETAILS_SUCCESS,USER_DETAILS_FAIL,
+    USER_DELETE_SUCCESS,USER_DELETE_REQUEST,USER_DELETE_FAIL,
+    MAKE_USER_ADMIN_FAIL,MAKE_USER_ADMIN_SUCCESS,MAKE_USER_ADMIN_REQUEST,
+    MAKE_ADMIN_USER_REQUEST,MAKE_ADMIN_USER_SUCCESS,MAKE_ADMIN_USER_FAIL
+} from "../constants/userConstants"
 
 import axios from "axios"
 //dispatch by name of action function from component , action does its work  then dispatvh from action to reducer then reducer save in store
@@ -197,6 +202,84 @@ export const getAllUsersAction=()=>async(dispatch)=>{
     } catch (error) {
         dispatch({
             type:"ALL_USERS_FAIL",
+            payloadData:error.response.data.message //The expression error.response.data.message is commonly used when handling errors from API responses in JavaScript applications, especially when using libraries like Axios for making HTTP requests.
+          })
+    }
+}
+
+//to get a user by admin
+export const UserDetailsByAdminAction=(id)=>async(dispatch)=>{
+    try {
+        dispatch({type:USER_DETAILS_REQUEST})
+
+        const { data } = await axios.get(`/api/v1/admin/user/getUser/${id}`);
+          
+         
+        // console.log(data.all);
+           
+        dispatch({type:USER_DETAILS_SUCCESS,payloadData:data});
+    } catch (error) {
+        dispatch({
+            type:USER_DETAILS_FAIL,
+            payloadData:error.response.data.message //The expression error.response.data.message is commonly used when handling errors from API responses in JavaScript applications, especially when using libraries like Axios for making HTTP requests.
+          })
+    }
+}
+
+//to delete a user by admin
+export const UserDeleteByAdminAction=(id)=>async(dispatch)=>{
+    try {
+        dispatch({type:USER_DELETE_REQUEST})
+
+        const { data } = await axios.delete(`/api/v1/admin/user/DeleteUser/${id}`);
+          
+         
+        // console.log(data.all);
+           
+        dispatch({type:USER_DELETE_SUCCESS,payloadData:data});
+    } catch (error) {
+        dispatch({
+            type:USER_DELETE_FAIL,
+            payloadData:error.response.data.message //The expression error.response.data.message is commonly used when handling errors from API responses in JavaScript applications, especially when using libraries like Axios for making HTTP requests.
+          })
+    }
+}
+//to make an user as admin ->by other admin
+export const makeUserAdminAction=(id)=>async(dispatch)=>{
+    try {
+        dispatch({type:MAKE_USER_ADMIN_REQUEST})
+
+        const { data } = await axios.post(`/api/v1/admin/user/makeAdmin/${id}`,{
+            headers: { "Content-Type": "application/json" }
+        });
+         
+        // console.log(data);
+           
+        dispatch({type:MAKE_USER_ADMIN_SUCCESS,payloadData:data});
+    } catch (error) {
+        dispatch({
+            type:MAKE_USER_ADMIN_FAIL,
+            payloadData:error.response.data.message //The expression error.response.data.message is commonly used when handling errors from API responses in JavaScript applications, especially when using libraries like Axios for making HTTP requests.
+          })
+    }
+}
+
+//to make an ADMIN as USER ->by other admin
+export const makeAdminUserAction=(id)=>async(dispatch)=>{
+    try {
+        dispatch({type:MAKE_ADMIN_USER_REQUEST})
+
+        const { data } = await axios.post(`/api/v1/admin/user/makeUser/${id}`,{
+            headers: { "Content-Type": "application/json" }
+        });
+          
+         
+        // console.log(data.all);
+           
+        dispatch({type:MAKE_ADMIN_USER_SUCCESS,payloadData:data});
+    } catch (error) {
+        dispatch({
+            type:MAKE_ADMIN_USER_FAIL,
             payloadData:error.response.data.message //The expression error.response.data.message is commonly used when handling errors from API responses in JavaScript applications, especially when using libraries like Axios for making HTTP requests.
           })
     }

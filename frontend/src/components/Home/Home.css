@@ -1,20 +1,19 @@
 #root{
   background-color: #f2f0fd;
 }
-.headTop {
-    background: #decfc8;
-   
-     background-repeat: no-repeat;
-     background-size: cover;
-    height: 100vmin;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    color: white; 
-    
-  }
+.banner {
+  background-image: url("../images//landingPhoto.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vmin;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
 
   .headTop>span{
     margin-right: 700px;

@@ -140,8 +140,7 @@ exports.deleteOrder=asynchandler(async(req,res,next)=>{
     return res.status(404).json({message:"Not Found"})
   }
 
-  await order.remove()
-
+  await Order.deleteOne({_id:req.params.pid})
   res.status(200).json({
     success:true,
     // total:sum,

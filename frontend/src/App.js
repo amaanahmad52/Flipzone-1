@@ -42,6 +42,13 @@ import NewProduct from './components/admin/NewProduct';
 import ProductEdit from './components/admin/ProductEdit';
 
 import AllOrders from './components/admin/AllOrders';
+import OrderEdit from './components/admin/OrderEdit';
+import AllUsers from './components/admin/AllUsers';
+import UserEdit from './components/admin/UserEdit';
+import Reviews from './components/admin/Reviews';
+
+import Contact from './Contact';
+import About from './About';
 
 function App() {
   //now if user is autheticated then a  speed dialer will appear
@@ -98,6 +105,8 @@ function App() {
         <Route  exact path='/search'  element={<Search/>}></Route>
         <Route  exact path='/login'  element={<LoginSignUp/>}></Route>
         <Route  exact path='/password/forgot'  element={<ForgotPassword/>}></Route>
+        <Route  exact path='/contact'  element={<Contact/>}></Route>
+        <Route  exact path='/about'  element={<About/>}></Route>
 
         {/* //conditional routing */}
         
@@ -148,6 +157,18 @@ function App() {
       </Route>
       <Route element={<AdminProtectedRoute isAdmin={true}/>}>
           <Route  exact path='/admin/orders/'  element={<AllOrders/>}></Route>
+      </Route>
+      <Route element={<AdminProtectedRoute isAdmin={true}/>}>
+          <Route  exact path='/admin/order/:id'  element={<OrderEdit/>}></Route>
+      </Route>
+      <Route element={<AdminProtectedRoute isAdmin={true}/>}>
+          <Route  exact path='/admin/users'  element={<AllUsers/>}></Route>
+      </Route>
+      <Route element={<AdminProtectedRoute isAdmin={true}/>}>
+          <Route  exact path='/admin/user/:id'  element={<UserEdit/>}></Route>
+      </Route>
+      <Route element={<AdminProtectedRoute isAdmin={true}/>}>
+          <Route  exact path='/admin/reviews'  element={<Reviews/>}></Route>
       </Route>
 
 

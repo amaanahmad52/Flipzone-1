@@ -332,6 +332,10 @@ exports.makeUser=asynchandler(async(req,res,next)=>{
 exports.DeleteUser=asynchandler(async(req,res,next)=>{
 
     const singleuser=await User.findById(req.params.id);
+
+    const imageId = singleuser.avatar.public_id;
+    await cloudinary.v2.uploader.destroy(imageId);
+    
     await User.deleteOne(singleuser)
     res.status(200).json({
         success:true,

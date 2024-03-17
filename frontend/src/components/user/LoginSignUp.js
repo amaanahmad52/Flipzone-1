@@ -31,7 +31,7 @@ const Login = () => {
                                      //we get /shipping 
 //this is basically url that got hitted when autheticated, one direct is /account and one is called at cart componet at checkout
 
-  const location=useLocation()
+  // const location=useLocation()
   // const redirecturl=location.search ? location.search.split("=")[1] : "/account";
 
   //oth index is before question mark part and 1st index is querystring part ->split use kia

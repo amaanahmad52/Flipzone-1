@@ -1,7 +1,7 @@
 
 import {combineReducers} from "redux"
 import { AdminproductReducer, newProductCreateReducer, particularProductDetailReducer, productDeleteReducer, productEditReducer, productReducer } from './ProductsReducer'
-import { UpdateUserReducer, forgotandupdatePasswordReducer, getAllUsersReducer, userReducer } from "./userReducer"
+import { UpdateUserReducer, UserDeleteByAdminReducer, UserDetailsByAdminReducer, forgotandupdatePasswordReducer, getAllUsersReducer, makeAdminNUserReducer, makeAdminUserReducer, userReducer } from "./userReducer"
 import { HandleCartReducer } from "./CartReducer"
 import { ParticularOrderDetailsReducer, getAllOrdersReducer, myOrderDetailsReducer, orderhandleReducer, ordersDeleteReducer, ordersDeleteUpdateReducer, ordersUpdateReducer } from "./OrderReducer"
 
@@ -25,6 +25,10 @@ export const rootReducer=combineReducers({
     editProduct:productEditReducer,
     ordersdelete:ordersDeleteReducer,
     ordersupdate:ordersUpdateReducer,
+    userDetailsByAdmin:UserDetailsByAdminReducer,
+    deleteUser:UserDeleteByAdminReducer,
+    makeAdminNUser:makeAdminNUserReducer
+
 })
 
 
