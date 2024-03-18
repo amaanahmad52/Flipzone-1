@@ -25,7 +25,7 @@ const Featured = ({product}) => {
         alt="..."
         style={{ height: "100%" }}
       />
-      <div className="card-body d-flex flex-column justify-content-between">
+      <div  className="card-body d-flex flex-column justify-content-between">
         <h5 className="card-title">{product.name}</h5>
         <div className="d-flex">
           <ReactStars {...options} />
@@ -33,7 +33,7 @@ const Featured = ({product}) => {
             ( {product.numOfReviews} reviews)
           </span>
         </div>
-        <p className="card-text" style={{ color: "#c53a44", fontWeight: "bolder", fontFamily: "Roboto" }}>
+        <p  className="card-text" style={{color: "#c53a44", fontWeight: "bolder", fontFamily: "Roboto" }}>
           ₹{product.price}
         </p>
       </div>

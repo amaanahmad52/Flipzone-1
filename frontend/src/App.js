@@ -47,8 +47,9 @@ import AllUsers from './components/admin/AllUsers';
 import UserEdit from './components/admin/UserEdit';
 import Reviews from './components/admin/Reviews';
 
-import Contact from './Contact';
-import About from './About';
+import Contact from './components/Contact';
+import About from './components/About';
+import NotFound from "./components/NotFound"
 
 function App() {
   //now if user is autheticated then a  speed dialer will appear
@@ -80,6 +81,9 @@ function App() {
 },[]);
 //jgjg
   // user&& console.log(user.role);
+
+  //we dont allow inspect in our website
+  window.addEventListener("contextmenu",(e)=>e.preventDefault())
   return (
     <>
     
@@ -173,7 +177,7 @@ function App() {
 
 
 
-
+      <Route path="*"  element={<NotFound/>}></Route>
 
 
 
